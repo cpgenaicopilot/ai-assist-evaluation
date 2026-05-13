@@ -118,7 +118,7 @@ Chart.defaults.font.family = "Inter, system-ui, sans-serif";
   const data = labels.map(k => Math.round(D.responseDepth[k] / 1000));
   new Chart(ctx, {
     type: 'bar',
-    data: { labels, datasets: [{ data, backgroundColor: palette.accent2, borderRadius: 4 }] },
+    data: { labels, datasets: [{ data, backgroundColor: palette.accent, borderRadius: 2 }] },
     options: {
       responsive: true, maintainAspectRatio: false,
       plugins: {
