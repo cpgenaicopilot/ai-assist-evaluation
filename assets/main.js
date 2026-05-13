@@ -6,13 +6,14 @@ const D = window.EVAL_DATA;
 function getCss(name) { return getComputedStyle(document.documentElement).getPropertyValue(name).trim(); }
 
 const palette = {
-  text: getCss('--text') || '#e4e8f1',
-  textDim: getCss('--text-dim') || '#97a0bd',
-  border: getCss('--border') || '#2a3458',
-  accent: getCss('--accent') || '#5ee0c4',
-  accent2: getCss('--accent-2') || '#3a8df2',
-  warn: getCss('--warn') || '#ffb347',
-  danger: getCss('--danger') || '#ff6b6b'
+  text: getCss('--text') || '#f2f2f2',
+  textDim: getCss('--text-dim') || '#c4b0bb',
+  border: getCss('--border') || '#4a3140',
+  accent: getCss('--accent') || '#ee0c5d',     /* Brand Berry */
+  accent2: getCss('--accent-2') || '#741984',  /* Purple */
+  warn: getCss('--warn') || '#fcb117',          /* Brand Yellow */
+  danger: getCss('--danger') || '#ff3312',      /* Brand Orange */
+  surface: getCss('--surface') || '#321d2b'
 };
 
 Chart.defaults.color = palette.textDim;
@@ -49,7 +50,7 @@ Chart.defaults.font.family = "Inter, system-ui, sans-serif";
             title: (items) => names[items[0].dataIndex],
             label: (item) => 'Avg score: ' + item.parsed.x.toFixed(2) + '/5'
           },
-          backgroundColor: '#1a2138',
+          backgroundColor: palette.surface,
           borderColor: palette.border,
           borderWidth: 1,
           padding: 12
@@ -84,7 +85,7 @@ Chart.defaults.font.family = "Inter, system-ui, sans-serif";
       cutout: '64%',
       plugins: {
         legend: { position: 'bottom', labels: { padding: 14, font: { size: 12 } } },
-        tooltip: { backgroundColor: '#1a2138', borderColor: palette.border, borderWidth: 1 }
+        tooltip: { backgroundColor: palette.surface, borderColor: palette.border, borderWidth: 1 }
       }
     }
   });
@@ -105,7 +106,7 @@ Chart.defaults.font.family = "Inter, system-ui, sans-serif";
         legend: { display: false },
         tooltip: {
           callbacks: { label: (item) => '~' + item.parsed.y + 'K chars avg' },
-          backgroundColor: '#1a2138', borderColor: palette.border, borderWidth: 1
+          backgroundColor: palette.surface, borderColor: palette.border, borderWidth: 1
         }
       },
       scales: {
@@ -140,7 +141,7 @@ Chart.defaults.font.family = "Inter, system-ui, sans-serif";
       plugins: {
         legend: { position: 'bottom', labels: { padding: 14, font: { size: 11.5 } } },
         tooltip: {
-          backgroundColor: '#1a2138', borderColor: palette.border, borderWidth: 1,
+          backgroundColor: palette.surface, borderColor: palette.border, borderWidth: 1,
           callbacks: { label: (item) => item.dataset.label + ': ' + item.parsed.y + 's' }
         }
       },
