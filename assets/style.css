@@ -200,6 +200,14 @@ code { background: var(--surface-2); padding: 0.12em 0.4em; border-radius: 4px; 
   box-shadow: 0 8px 28px -8px var(--accent-glow);
 }
 .btn-primary:hover { transform: translateY(-2px); color: var(--bg); box-shadow: 0 14px 36px -10px var(--accent-glow); }
+.btn-secondary {
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--accent);
+  box-shadow: 0 4px 16px -6px var(--accent-glow);
+}
+.btn-secondary:hover { background: var(--surface-2); color: var(--accent); transform: translateY(-2px); }
+
 .btn-ghost {
   background: transparent;
   color: var(--text);
@@ -207,6 +215,70 @@ code { background: var(--surface-2); padding: 0.12em 0.4em; border-radius: 4px; 
 }
 .btn-ghost:hover { background: var(--surface); }
 .btn-large { padding: 18px 36px; font-size: 17px; }
+
+/* === Featured Report Card (between hero and dashboard) === */
+.section-report {
+  padding: 0 0 30px;
+  background: var(--bg);
+}
+.report-card {
+  display: flex; align-items: center; gap: 26px;
+  padding: 32px 36px;
+  background: linear-gradient(135deg, var(--surface) 0%, var(--surface-2) 100%);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius);
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 8px 30px -10px var(--accent-glow);
+}
+.report-card::before {
+  content: ''; position: absolute; top: 0; left: 0; bottom: 0;
+  width: 5px;
+  background: linear-gradient(180deg, var(--accent), var(--accent-2));
+}
+.report-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--accent-2);
+  box-shadow: 0 16px 44px -12px var(--accent-glow);
+}
+.report-card-icon {
+  font-size: 48px; line-height: 1;
+  flex-shrink: 0;
+  filter: drop-shadow(0 4px 10px rgba(94, 224, 196, 0.3));
+}
+.report-card-body { flex: 1; }
+.report-card-eyebrow {
+  display: inline-block;
+  font-size: 11px; letter-spacing: 2px; font-weight: 700;
+  color: var(--accent); margin-bottom: 6px;
+}
+.report-card-body h3 {
+  font-size: 22px; font-weight: 800;
+  color: var(--text);
+  margin-bottom: 8px; letter-spacing: -0.01em;
+}
+.report-card-body p {
+  font-size: 14.5px; color: var(--text-dim);
+  line-height: 1.55; margin-bottom: 10px;
+}
+.report-card-meta {
+  font-size: 12.5px; color: var(--text-mute);
+  font-family: 'JetBrains Mono', monospace;
+}
+.report-card-arrow {
+  font-size: 32px; font-weight: 300;
+  color: var(--accent);
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+.report-card:hover .report-card-arrow { transform: translateX(6px); }
+
+@media (max-width: 720px) {
+  .report-card { flex-direction: column; text-align: center; align-items: flex-start; padding: 26px; }
+  .report-card-arrow { display: none; }
+}
 
 /* === Sections === */
 .section { padding: 100px 0; position: relative; }
