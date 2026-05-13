@@ -740,13 +740,22 @@ code { background: var(--surface-2); padding: 0.12em 0.4em; border-radius: 4px; 
 .explore-cta { margin-bottom: 50px; }
 .explore-cta-note { font-size: 13.5px; color: var(--text-mute); margin-top: 14px; }
 
-.explore-examples { text-align: left; margin: 40px auto 0; max-width: 980px; }
-.explore-examples h3 { font-size: 17px; margin-bottom: 16px; text-align: center; color: var(--accent); }
-.example-grid {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+.explore-examples { text-align: left; margin: 40px auto 0; max-width: 1080px; }
+.explore-examples h3 { font-size: 17px; margin-bottom: 24px; text-align: center; color: var(--accent); }
+.example-category { margin-bottom: 28px; }
+.example-category:last-child { margin-bottom: 0; }
+.example-cat-label {
+  display: inline-block;
+  font-size: 13px; font-weight: 700; color: var(--text);
+  margin-bottom: 12px;
+  padding: 5px 14px;
+  background: var(--surface-2);
+  border-radius: 100px;
 }
-@media (max-width: 880px) { .example-grid { grid-template-columns: 1fr 1fr; } }
-@media (max-width: 540px) { .example-grid { grid-template-columns: 1fr; } }
+.example-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;
+}
+@media (max-width: 880px) { .example-grid { grid-template-columns: 1fr; } }
 .example-q {
   background: var(--bg-3);
   border: 1px solid var(--border);
@@ -756,27 +765,11 @@ code { background: var(--surface-2); padding: 0.12em 0.4em; border-radius: 4px; 
   padding: 14px 18px;
   border-radius: var(--radius-sm);
   cursor: pointer;
-  line-height: 1.4;
+  line-height: 1.45;
   transition: all 0.15s ease;
 }
 .example-q:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
 
-.explore-howto {
-  text-align: left; margin: 50px auto 0; max-width: 720px;
-  background: rgba(10, 14, 26, 0.5);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 26px 30px;
-}
-.explore-howto h3 { font-size: 16px; margin-bottom: 14px; color: var(--accent); }
-.explore-howto ol, .explore-howto ul.explore-howto-list { padding-left: 22px; }
-.explore-howto li { font-size: 14px; color: var(--text-dim); margin-bottom: 8px; line-height: 1.55; }
-.explore-howto li strong { color: var(--text); }
-.explore-howto-foot {
-  margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--border);
-  font-size: 13.5px; color: var(--text-mute); line-height: 1.6;
-}
-.explore-howto-foot code { font-size: 12.5px; }
 
 /* === Footer === */
 .footer {

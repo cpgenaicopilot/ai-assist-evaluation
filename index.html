@@ -140,6 +140,64 @@
   </div>
 </section>
 
+<!-- CTA: Explore with Claude (now placed prominently right after the dashboard) -->
+<section id="explore" class="section section-explore">
+  <div class="container">
+    <div class="explore-card">
+      <span class="explore-eyebrow">EXPLORE THE FULL EVIDENCE BASE</span>
+      <h2>Ask Claude anything.<br>Get diagrams, charts, and grounded answers.</h2>
+      <p class="explore-sub">
+        The entire evaluation — every prompt, every response, every conversation, every screenshot — is loaded into a Claude Project, already shared with the Check Point team. Open it and ask whatever you want. Claude cites specific test IDs (<code>B-005</code>, <code>J-001</code>, <code>MULTI-001-T4</code>) and refuses to fabricate.
+      </p>
+
+      <div class="explore-cta">
+        <a href="https://claude.ai/project/019e2111-65bb-75e1-841d-b622188c4783" target="_blank" rel="noopener" class="btn btn-primary btn-large">Open the Claude Project →</a>
+        <p class="explore-cta-note">Already set up. Available to anyone with a Check Point Claude account.</p>
+      </div>
+
+      <div class="explore-examples">
+        <h3>Example prompts (click any to copy)</h3>
+
+        <div class="example-category">
+          <span class="example-cat-label">🎯 Quick Exploration</span>
+          <div class="example-grid">
+            <button class="example-q">"Give me the 60-second summary of the evaluation."</button>
+            <button class="example-q">"What was the single most important finding?"</button>
+            <button class="example-q">"Are we ready to GA? What's the residual risk?"</button>
+            <button class="example-q">"What did the trap questions reveal about hallucination risk?"</button>
+          </div>
+        </div>
+
+        <div class="example-category">
+          <span class="example-cat-label">📊 Charts &amp; Diagrams</span>
+          <div class="example-grid">
+            <button class="example-q">"Generate a Mermaid flowchart showing how AI Assist orchestrated its 4 tools in B-005 (the deletion safety analysis)."</button>
+            <button class="example-q">"Draw me a Mermaid sequence diagram of the 6-turn MULTI-001 conversation, highlighting the T4/T5 refusals."</button>
+            <button class="example-q">"Create an ASCII bar chart of the average score per bucket (A through K)."</button>
+            <button class="example-q">"Build a Mermaid mind-map of the report's 3 strengths and 3 weaknesses, with evidence references on each leaf."</button>
+            <button class="example-q">"Generate a comparison table (markdown) of polished vs sloppy prompts: tool calls, response length, accuracy, interpretation alignment."</button>
+            <button class="example-q">"Draw a Mermaid state diagram of how AI Assist transitions through Thinking → API Query → Rendered Answer, with the failure modes I observed."</button>
+            <button class="example-q">"Plot an SVG radar chart of the 7 scoring dimensions (Correctness, Grounding, Technical Accuracy, Depth, Usefulness, Proactiveness, Reasoning Clarity)."</button>
+            <button class="example-q">"Create a visual timeline (Mermaid gantt or timeline) of the entire test run: when each bucket was executed, and the standout moments."</button>
+          </div>
+        </div>
+
+        <div class="example-category">
+          <span class="example-cat-label">🔍 Deep Dive</span>
+          <div class="example-grid">
+            <button class="example-q">"Show me an example of AI Assist's best work and an example of its worst."</button>
+            <button class="example-q">"How does AI Assist behave when pushed to commit beyond its evidence?"</button>
+            <button class="example-q">"Print all the prompts you ran in the Rulebase bucket."</button>
+            <button class="example-q">"Show me the exact API tool sequence in B-005."</button>
+            <button class="example-q">"What's the difference between a good and a bad prompt for AI Assist?"</button>
+            <button class="example-q">"Compare J-001 and J-002 in detail — why did one fail and the other succeed?"</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- Findings -->
 <section id="findings" class="section">
   <div class="container">
@@ -431,55 +489,6 @@
     </div>
 
     <div class="conv-grid" id="convGrid"></div>
-  </div>
-</section>
-
-<!-- CTA: Explore with Claude -->
-<section id="explore" class="section section-explore">
-  <div class="container">
-    <div class="explore-card">
-      <span class="explore-eyebrow">CONTINUE EXPLORING</span>
-      <h2>This is just the surface.<br>Ask Claude anything about the evidence.</h2>
-      <p class="explore-sub">
-        Every prompt, every response, every conversation, and every screenshot from this evaluation has been packaged into a Claude Project. You and your team can ask whatever you want — Claude will answer with grounded references to specific test IDs and transcripts.
-      </p>
-
-      <div class="explore-cta">
-        <a href="https://claude.ai/project/019e2111-65bb-75e1-841d-b622188c4783" target="_blank" rel="noopener" class="btn btn-primary btn-large">Open the Claude Project →</a>
-        <p class="explore-cta-note">Already set up and shared with the team. Just click and start asking.</p>
-      </div>
-
-      <div class="explore-examples">
-        <h3>Try asking it (click to copy):</h3>
-        <div class="example-grid">
-          <button class="example-q">"Give me the 60-second summary of the evaluation."</button>
-          <button class="example-q">"What was the single most important finding?"</button>
-          <button class="example-q">"Show me an example of AI Assist's best work and an example of its worst."</button>
-          <button class="example-q">"What did the trap questions reveal about hallucination risk?"</button>
-          <button class="example-q">"How does AI Assist behave when pushed to commit beyond its evidence?"</button>
-          <button class="example-q">"Print all the prompts you ran in the Rulebase bucket."</button>
-          <button class="example-q">"Show me the exact API tool sequence in B-005."</button>
-          <button class="example-q">"What's the difference between a good and a bad prompt for AI Assist?"</button>
-          <button class="example-q">"Are we ready to GA? What's the residual risk?"</button>
-        </div>
-      </div>
-
-      <div id="how-to-set-up" class="explore-howto">
-        <h3>What's already loaded in the project</h3>
-        <ul class="explore-howto-list">
-          <li><strong>The full report</strong> — executive verdict, scoring dashboard, all findings, recommendations</li>
-          <li><strong>All 133 prompts verbatim</strong> — organized by test ID, ready to print</li>
-          <li><strong>74 individual test transcripts</strong> across 11 buckets — every word AI Assist returned</li>
-          <li><strong>11 conversation transcripts</strong> — every turn captured</li>
-          <li><strong>3 follow-up tests</strong> — sloppy prompts + cumulative multi-step</li>
-          <li><strong>129 screenshots</strong> — visual evidence Claude can pull and describe on request</li>
-        </ul>
-        <p class="explore-howto-foot">
-          Claude in the project is instructed to cite specific test IDs (e.g. <code>B-005</code>, <code>J-001</code>, <code>MULTI-001-T4</code>), distinguish report claims from raw transcript evidence, and refuse to fabricate.
-          Want to spin up your own copy? See the <a href="https://github.com/cpgenaicopilot/ai-assist-evaluation/blob/main/transcripts/PROJECT-SETUP-GUIDE.md" target="_blank" rel="noopener">setup guide</a>.
-        </p>
-      </div>
-    </div>
   </div>
 </section>
 
