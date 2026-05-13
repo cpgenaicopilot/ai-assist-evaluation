@@ -759,9 +759,9 @@ code { background: var(--surface-2); padding: 0.12em 0.4em; border-radius: 2px; 
 .bucket-test-row .tid { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 13.5px; color: var(--accent); }
 .bucket-test-row .tprompt { font-size: 13.5px; color: var(--text-dim); line-height: 1.45; }
 .bucket-test-row .tscore { text-align: center; font-weight: 700; font-size: 14px; }
-.bucket-test-row .tscore.high { color: var(--good); }
-.bucket-test-row .tscore.mid { color: var(--warn); }
-.bucket-test-row .tscore.low { color: var(--danger); }
+.bucket-test-row .tscore.high { color: var(--accent); font-weight: 800; }
+.bucket-test-row .tscore.good { color: var(--text); }
+.bucket-test-row .tscore.low { color: var(--danger); font-weight: 800; }
 .bucket-test-row .tlinks { display: flex; gap: 6px; justify-content: flex-end; }
 .bucket-test-row .tlink {
   font-size: 11px; padding: 4px 8px; background: var(--surface); border-radius: 6px;
@@ -930,7 +930,7 @@ code { background: var(--surface-2); padding: 0.12em 0.4em; border-radius: 2px; 
   color: var(--bg);
   background: var(--accent);
 }
-.bucket-J { background: var(--warn); color: var(--bg); }
+.bucket-J { background: var(--danger); color: #fff; }
 .bucket-A, .bucket-B, .bucket-K { background: var(--accent); color: #fff; }
 .bucket-C, .bucket-D, .bucket-G { background: var(--accent-2); color: #fff; }
 .bucket-E, .bucket-F { background: var(--dark-berry); color: #fff; }

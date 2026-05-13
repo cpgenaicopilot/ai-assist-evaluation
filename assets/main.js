@@ -190,7 +190,13 @@ Chart.defaults.font.family = "Inter, system-ui, sans-serif";
 })();
 
 // === Bucket panel ===
-function scoreClass(s) { return s >= 4.6 ? 'high' : s >= 4.0 ? 'mid' : 'low'; }
+function scoreClass(s) {
+  // 2-tier matches the bucket chart: berry for good (4.0+), orange for problem (<4.0).
+  // High emphasis berry for the standouts (4.7+) so they pop.
+  if (s >= 4.7) return 'high';
+  if (s >= 4.0) return 'good';
+  return 'low';
+}
 
 function renderBucket(letter) {
   const b = D.buckets[letter];
