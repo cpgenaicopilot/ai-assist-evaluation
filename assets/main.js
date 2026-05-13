@@ -212,99 +212,127 @@ renderBucket('A');
 
 // === Gallery ===
 const galleryHost = document.getElementById('gallery');
+const galleryHeader = document.getElementById('galleryHeader');
 let galleryFilter = 'highlights';
+
+const galleryDescs = {
+  highlights: { title: '⭐ Curated Highlights', desc: 'The 15 most important screenshots — start here if you want to see the standout moments.' },
+  J: { title: '🪤 Trap Tests (Bucket J)', desc: 'Eight deliberately wrong, ambiguous, or impossible prompts. 7 handled correctly. J-001 (Tokyo-DataCenter) is the one failure.' },
+  MULTI: { title: '🧠 MULTI-001 — Cumulative Multi-Step', desc: 'Gold-standard multi-step behavior. The AI tracked analysis state across 6 turns and refused to overreach in T4/T5.' },
+  SLOPPY: { title: '💬 Sloppy-Prompt Tests', desc: 'SLOPPY-001 (6-turn lazy-prompt workflow) + 3 single sloppy prompts. Tests whether AI handles abbreviations and vague references.' },
+  CONV: { title: '💭 Multi-Turn Conversations (CONV-002 — CONV-011)', desc: '40 turns across 10 admin workflows. 100% pass rate on conversational memory.' },
+  A: { title: 'Bucket A — Posture & Inventory', desc: D.buckets.A.desc },
+  B: { title: 'Bucket B — Rulebase Analysis & Hygiene', desc: D.buckets.B.desc },
+  C: { title: 'Bucket C — Object & Group Hygiene', desc: D.buckets.C.desc },
+  D: { title: 'Bucket D — Threat Prevention Quality', desc: D.buckets.D.desc },
+  E: { title: 'Bucket E — Day-to-Day Operations', desc: D.buckets.E.desc },
+  F: { title: 'Bucket F — Troubleshooting', desc: D.buckets.F.desc },
+  G: { title: 'Bucket G — Compliance, Audit & Evidence', desc: D.buckets.G.desc },
+  H: { title: 'Bucket H — VPN & Connectivity', desc: D.buckets.H.desc },
+  I: { title: 'Bucket I — Migration, Upgrade & Capacity', desc: D.buckets.I.desc },
+  K: { title: 'Bucket K — Complex Multi-Step Workflows', desc: D.buckets.K.desc }
+};
+
+function scoreBadge(score) {
+  if (score == null) return '';
+  let cls = 'badge-mid';
+  if (score >= 4.6) cls = 'badge-high';
+  else if (score < 4.0) cls = 'badge-low';
+  return `<span class="card-score-badge ${cls}">${score.toFixed(2)}</span>`;
+}
+
+function bucketTag(letter) {
+  return letter ? `<span class="card-bucket-tag bucket-${letter}">${letter}</span>` : '';
+}
 
 function renderGallery() {
   if (!galleryHost) return;
   galleryHost.innerHTML = '';
+  const meta = galleryDescs[galleryFilter] || { title: 'Screenshots', desc: '' };
+  galleryHeader.innerHTML = `<h3>${meta.title}</h3><p>${meta.desc}</p>`;
 
   let items = [];
   if (galleryFilter === 'highlights') {
-    items = D.highlightScreenshots;
-  } else if (galleryFilter === 'all') {
-    items = buildAllGalleryItems();
-  } else if (galleryFilter === 'J') {
-    items = buildBucketGallery('J');
+    items = D.highlightScreenshots.map(h => ({ ...h, bucket: bucketOf(h.id) }));
   } else if (galleryFilter === 'MULTI') {
     items = [
       { file: 'test-MULTI-001-T1-top.png', id: 'MULTI-001-T1', label: 'T1 — find 5 worst rules' },
       { file: 'test-MULTI-001-T2-top.png', id: 'MULTI-001-T2', label: 'T2 — impact of deleting rule #1' },
       { file: 'test-MULTI-001-T3-top.png', id: 'MULTI-001-T3', label: 'T3 — impact of deleting rule #2' },
-      { file: 'test-MULTI-001-T4-top.png', id: 'MULTI-001-T4', label: 'T4 — refused to extrapolate' },
-      { file: 'test-MULTI-001-T5-top.png', id: 'MULTI-001-T5', label: 'T5 — refused to fabricate ticket' },
+      { file: 'test-MULTI-001-T4-top.png', id: 'MULTI-001-T4', label: 'T4 — refused to extrapolate', score: 5.0 },
+      { file: 'test-MULTI-001-T5-top.png', id: 'MULTI-001-T5', label: 'T5 — refused to fabricate ticket', score: 5.0 },
       { file: 'test-MULTI-001-T6-top.png', id: 'MULTI-001-T6', label: 'T6 — synthesis preserving state' }
+    ];
+  } else if (galleryFilter === 'SLOPPY') {
+    items = [
+      { file: 'test-SLOPPY-001-T1-top.png', id: 'SLOPPY-001-T1', label: '"audit my fws"' },
+      { file: 'test-SLOPPY-001-T2-top.png', id: 'SLOPPY-001-T2', label: '"wat about the worst one"' },
+      { file: 'test-SLOPPY-001-T3-top.png', id: 'SLOPPY-001-T3', label: '"fix it"' },
+      { file: 'test-SLOPPY-001-T4-top.png', id: 'SLOPPY-001-T4', label: '"and the others"' },
+      { file: 'test-SLOPPY-001-T5-top.png', id: 'SLOPPY-001-T5', label: '"ok will any of that break stuff"' },
+      { file: 'test-SLOPPY-001-T6-top.png', id: 'SLOPPY-001-T6', label: '"k summarize for jira"' },
+      { file: 'test-SLOPPY-S1-top.png', id: 'SLOPPY-S1', label: '"is my fw ok"' },
+      { file: 'test-SLOPPY-S2-top.png', id: 'SLOPPY-S2', label: '"we got hackd?"' },
+      { file: 'test-SLOPPY-S3-top.png', id: 'SLOPPY-S3', label: '"rdp" → 5-option clarification' }
     ];
   } else if (galleryFilter === 'CONV') {
     items = buildConvGallery();
+  } else if (D.buckets[galleryFilter]) {
+    items = D.buckets[galleryFilter].tests.map(t => ({
+      file: `test-${t.id.replace('-','')}-top.png`,
+      id: t.id, label: t.diff, score: t.score, bucket: galleryFilter
+    }));
   }
 
   for (const item of items) {
     const div = document.createElement('div');
     div.className = 'gallery-item';
     div.innerHTML = `
-      <img src="screenshots/${item.file}" alt="${item.label}" loading="lazy" onerror="this.parentElement.style.display='none'">
-      <div class="gallery-label">${item.id} — ${item.label || ''}</div>
+      <div class="gallery-img-wrap">
+        <img src="screenshots/${item.file}" alt="${item.label || item.id}" loading="lazy" onerror="this.parentElement.parentElement.style.display='none'">
+      </div>
+      <div class="gallery-card-body">
+        <div class="gallery-card-top">
+          ${bucketTag(item.bucket)}
+          <span class="gallery-card-id">${item.id}</span>
+          ${scoreBadge(item.score)}
+        </div>
+        ${item.label ? `<div class="gallery-card-label">${item.label}</div>` : ''}
+      </div>
     `;
     div.addEventListener('click', () => openLightbox('screenshots/' + item.file, item.id + (item.label ? ' — ' + item.label : '')));
     galleryHost.appendChild(div);
   }
 }
 
-function buildAllGalleryItems() {
-  const all = [];
-  // Bucket tests
-  for (const [letter, b] of Object.entries(D.buckets)) {
-    for (const t of b.tests) {
-      const fileId = t.id.replace('-','');
-      all.push({ file: `test-${fileId}-top.png`, id: t.id, label: t.diff });
-    }
-  }
-  // Conversations (CONV-001 has no screenshots — skip)
-  for (const conv of D.conversations) {
-    if (conv.id === 'CONV-001') continue;
-    if (conv.files) {
-      for (const f of conv.files) {
-        all.push({ file: `test-${f}-top.png`, id: f, label: conv.title });
-      }
-    } else if (conv.id.startsWith('CONV') && conv.id !== 'CONV-001') {
-      const num = conv.id.replace('CONV-', '');
-      const max = typeof conv.turns === 'number' ? conv.turns : 4;
-      for (let i = 1; i <= max; i++) {
-        all.push({ file: `test-CONV${num}-T${i}-top.png`, id: `${conv.id}-T${i}`, label: conv.title });
-      }
-    } else if (conv.id === 'SLOPPY-001') {
-      for (let i = 1; i <= 6; i++) all.push({ file: `test-SLOPPY-001-T${i}-top.png`, id: `SLOPPY-001-T${i}`, label: 'Sloppy multi-turn' });
-    } else if (conv.id === 'MULTI-001') {
-      for (let i = 1; i <= 6; i++) all.push({ file: `test-MULTI-001-T${i}-top.png`, id: `MULTI-001-T${i}`, label: 'Cumulative multi-step' });
-    }
-  }
-  // Sloppy singles
-  for (const i of ['S1','S2','S3']) {
-    all.push({ file: `test-SLOPPY-${i}-top.png`, id: `SLOPPY-${i}`, label: 'Sloppy single' });
-  }
-  return all;
+function bucketOf(testId) {
+  if (!testId) return null;
+  const m = testId.match(/^([A-K])/);
+  return m ? m[1] : null;
 }
-function buildBucketGallery(letter) {
-  return D.buckets[letter].tests.map(t => ({
-    file: `test-${t.id.replace('-','')}-top.png`,
-    id: t.id, label: t.diff
-  }));
-}
+
 function buildConvGallery() {
   const out = [];
+  const convScores = {};
+  for (const c of D.conversations) {
+    convScores[c.id.replace('CONV-', 'CONV')] = c.score;
+    convScores[c.id] = c.score;
+  }
   // CONV-001 (the original R80.40 conversation) has transcripts but no screenshots captured
   for (let n = 2; n <= 11; n++) {
     const id = 'CONV0' + (n < 10 ? '0' + n : n);
-    for (let t = 1; t <= 4; t++) out.push({ file: `test-${id}-T${t}-top.png`, id: `${id}-T${t}`, label: '' });
+    const score = D.conversations.find(c => c.id === 'CONV-0' + (n < 10 ? '0' + n : n))?.score;
+    const title = D.conversations.find(c => c.id === 'CONV-0' + (n < 10 ? '0' + n : n))?.title || '';
+    for (let t = 1; t <= 4; t++) out.push({ file: `test-${id}-T${t}-top.png`, id: `${id}-T${t}`, label: title, score: t === 4 ? score : null });
   }
   return out;
 }
 
-document.querySelectorAll('.gallery-tab').forEach(btn => {
+document.querySelectorAll('.gallery-cat').forEach(btn => {
   btn.addEventListener('click', () => {
-    document.querySelectorAll('.gallery-tab').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.gallery-cat').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    galleryFilter = btn.dataset.filter;
+    galleryFilter = btn.dataset.cat;
     renderGallery();
   });
 });

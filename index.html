@@ -31,13 +31,14 @@
     </div>
     <ul class="nav-links">
       <li><a href="#dashboard">Dashboard</a></li>
+      <li><a href="#explore" class="cta-link">Explore with Claude →</a></li>
       <li><a href="#findings">Findings</a></li>
       <li><a href="#contrast">J-001 vs J-002</a></li>
       <li><a href="#multistep">Multi-Step</a></li>
       <li><a href="#prompts">Prompts</a></li>
       <li><a href="#buckets">Drill Down</a></li>
+      <li><a href="#conversations">Conversations</a></li>
       <li><a href="#gallery">Screenshots</a></li>
-      <li><a href="#explore" class="cta-link">Explore with Claude →</a></li>
     </ul>
   </div>
 </nav>
@@ -510,17 +511,28 @@
     <div class="section-head">
       <span class="section-eyebrow">APPENDIX · VISUAL EVIDENCE</span>
       <h2>Screenshot Library</h2>
-      <p>All 129 captured AI Assist responses. Filter by category, click any image to expand. Use this as the visual reference when reading the report or exploring the Claude Project above.</p>
+      <p>129 captured AI Assist responses, organized by category. Pick a category, then click any thumbnail to view full-size. Use this as the visual reference when reading the report or exploring the Claude Project above.</p>
     </div>
 
-    <div class="gallery-tabs">
-      <button class="gallery-tab active" data-filter="highlights">Highlights</button>
-      <button class="gallery-tab" data-filter="all">All 129</button>
-      <button class="gallery-tab" data-filter="J">Traps</button>
-      <button class="gallery-tab" data-filter="MULTI">MULTI-001</button>
-      <button class="gallery-tab" data-filter="CONV">Conversations</button>
+    <div class="gallery-categories">
+      <button class="gallery-cat active" data-cat="highlights"><span class="cat-name">⭐ Highlights</span><span class="cat-count">15</span></button>
+      <button class="gallery-cat" data-cat="J"><span class="cat-name">🪤 Trap Tests</span><span class="cat-count">8</span></button>
+      <button class="gallery-cat" data-cat="MULTI"><span class="cat-name">🧠 MULTI-001</span><span class="cat-count">6</span></button>
+      <button class="gallery-cat" data-cat="SLOPPY"><span class="cat-name">💬 Sloppy Prompts</span><span class="cat-count">9</span></button>
+      <button class="gallery-cat" data-cat="CONV"><span class="cat-name">💭 Conversations</span><span class="cat-count">40</span></button>
+      <button class="gallery-cat" data-cat="A"><span class="cat-name">A · Posture</span><span class="cat-count">6</span></button>
+      <button class="gallery-cat" data-cat="B"><span class="cat-name">B · Rulebase</span><span class="cat-count">10</span></button>
+      <button class="gallery-cat" data-cat="C"><span class="cat-name">C · Objects</span><span class="cat-count">6</span></button>
+      <button class="gallery-cat" data-cat="D"><span class="cat-name">D · Threat Prev.</span><span class="cat-count">6</span></button>
+      <button class="gallery-cat" data-cat="E"><span class="cat-name">E · Day-to-Day</span><span class="cat-count">8</span></button>
+      <button class="gallery-cat" data-cat="F"><span class="cat-name">F · Troubleshoot</span><span class="cat-count">8</span></button>
+      <button class="gallery-cat" data-cat="G"><span class="cat-name">G · Compliance</span><span class="cat-count">6</span></button>
+      <button class="gallery-cat" data-cat="H"><span class="cat-name">H · VPN</span><span class="cat-count">4</span></button>
+      <button class="gallery-cat" data-cat="I"><span class="cat-name">I · Migration</span><span class="cat-count">4</span></button>
+      <button class="gallery-cat" data-cat="K"><span class="cat-name">K · Complex</span><span class="cat-count">8</span></button>
     </div>
 
+    <div id="galleryHeader" class="gallery-header"></div>
     <div class="gallery" id="gallery"></div>
   </div>
 </section>
