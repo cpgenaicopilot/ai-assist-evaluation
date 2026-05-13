@@ -211,7 +211,7 @@ renderBucket('A');
 })();
 
 // === Gallery ===
-const galleryHost = document.getElementById('gallery');
+const galleryHost = document.getElementById('galleryGrid');
 const galleryHeader = document.getElementById('galleryHeader');
 let galleryFilter = 'highlights';
 
