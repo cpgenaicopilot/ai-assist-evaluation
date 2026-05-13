@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Check Point AI Assist — Content Quality Evaluation</title>
+<meta name="description" content="Independent quality evaluation of Check Point AI Assist: 133 prompts, 11 conversations, full transcripts, scoring, and explorable evidence.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+<!-- Top Nav -->
+<nav class="topnav">
+  <div class="nav-inner">
+    <div class="brand">
+      <span class="brand-dot"></span>
+      <span class="brand-text">AI Assist Evaluation</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#dashboard">Dashboard</a></li>
+      <li><a href="#findings">Findings</a></li>
+      <li><a href="#contrast">J-001 vs J-002</a></li>
+      <li><a href="#multistep">Multi-Step</a></li>
+      <li><a href="#prompts">Prompts</a></li>
+      <li><a href="#buckets">Drill Down</a></li>
+      <li><a href="#explore" class="cta-link">Explore with Claude →</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Hero -->
+<header class="hero">
+  <div class="hero-bg"></div>
+  <div class="container">
+    <div class="hero-badge">SECURITY EVALUATION · MAY 2026</div>
+    <h1>Check Point AI Assist<br><span class="hero-accent">Content Quality Evaluation</span></h1>
+    <p class="hero-sub">
+      An independent, evidence-based assessment of the AI copilot embedded in Smart-1 Cloud Security Management — across 74 individual questions, 11 multi-turn conversations, 8 trap tests, and a deep look at multi-step reasoning.
+    </p>
+
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-value">4.60<span class="stat-unit">/5</span></div>
+        <div class="stat-label">Content Quality Score</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">133</div>
+        <div class="stat-label">Distinct Prompts</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">87.5<span class="stat-unit">%</span></div>
+        <div class="stat-label">Trap Handling Pass Rate</div>
+      </div>
+      <div class="stat stat-warn">
+        <div class="stat-value">1</div>
+        <div class="stat-label">Critical Hallucination Found</div>
+      </div>
+    </div>
+
+    <div class="hero-verdict">
+      <span class="verdict-label">VERDICT</span>
+      <p>
+        <strong>AI Assist is a genuinely impressive analytical copilot for Check Point administrators.</strong>
+        Ready for daily use as an analytical co-pilot. Verify before acting on specific named-entity claims.
+        With the entity-existence pre-flight fix, the trust score moves from 4.5/5 to 5/5.
+      </p>
+    </div>
+
+    <div class="hero-cta">
+      <a href="#explore" class="btn btn-primary">Explore the evidence with Claude</a>
+      <a href="#dashboard" class="btn btn-ghost">See the dashboard</a>
+    </div>
+  </div>
+</header>
+
+<!-- Dashboard -->
+<section id="dashboard" class="section section-dark">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-eyebrow">SECTION 01</span>
+      <h2>The Scoring Dashboard</h2>
+      <p>Weighted formula: Correctness 25% · Grounding & Honesty 20% · Technical Accuracy 15% · Depth 15% · Usefulness 10% · Proactiveness 10% · Reasoning Clarity 5%</p>
+    </div>
+
+    <div class="dashboard-grid">
+
+      <div class="card card-large">
+        <h3>Score by Bucket</h3>
+        <p class="card-desc">Each of 11 test categories was scored independently. Strongest: <strong>Rulebase Hygiene (B)</strong> and <strong>Compliance (G)</strong>. Weakest: <strong>Trap tests (J)</strong> — pulled down by J-001.</p>
+        <div class="chart-wrap">
+          <canvas id="bucketChart"></canvas>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Trap Handling: 7 of 8 Correct</h3>
+        <p class="card-desc">Eight deliberately wrong, ambiguous, or impossible prompts. AI handled 7 cleanly — corrected false premises, asked for clarification, refused to fabricate. <strong>One failure: J-001.</strong></p>
+        <div class="chart-wrap">
+          <canvas id="trapChart"></canvas>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Aggregate Metrics</h3>
+        <ul class="metric-list">
+          <li><span class="metric-label">Hallucination rate</span><span class="metric-value metric-good">1.3%</span></li>
+          <li><span class="metric-label">Proactive insight rate</span><span class="metric-value metric-good">92%</span></li>
+          <li><span class="metric-label">Conversation coherence</span><span class="metric-value metric-good">5/5</span></li>
+          <li><span class="metric-label">Multi-tool orchestration rate</span><span class="metric-value metric-good">70%</span></li>
+          <li><span class="metric-label">Data-freshness disclosed</span><span class="metric-value metric-warn">~75%</span></li>
+          <li><span class="metric-label">Trust score (production action)</span><span class="metric-value metric-good">4.5/5</span></li>
+        </ul>
+      </div>
+
+      <div class="card card-large">
+        <h3>Trust by Use Case</h3>
+        <p class="card-desc">Not every use case carries the same risk. Analysis and audit prep are safe to deploy widely; acting on specific named-entity claims needs verification.</p>
+        <div class="trust-bars" id="trustBars"></div>
+      </div>
+
+      <div class="card">
+        <h3>Response Depth</h3>
+        <p class="card-desc">Average chars per response, by bucket. Complex multi-step (K) and Compliance (G) produce 8,000+ char audit-grade reports.</p>
+        <div class="chart-wrap">
+          <canvas id="depthChart"></canvas>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Findings -->
+<section id="findings" class="section">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-eyebrow">SECTION 02</span>
+      <h2>Headline Findings</h2>
+      <p>Three strengths that justify daily use. Three weaknesses to fix before full production trust.</p>
+    </div>
+
+    <div class="findings-grid">
+      <div class="finding finding-strength">
+        <div class="finding-icon">✓</div>
+        <h3>Real multi-tool orchestration</h3>
+        <p>Complex questions trigger 2–5 tools in parallel — Policy Rulebase Analyzer, Management API Query, Log Query, Documentation Retrieval. Tool calls are visible (<code>Calling management__show_*</code>). When a tool errored mid-query (B-005), AI auto-retried.</p>
+        <div class="finding-evidence">Evidence: B-005, K-002, K-007</div>
+      </div>
+
+      <div class="finding finding-strength">
+        <div class="finding-icon">✓</div>
+        <h3>Expert-grade proactive synthesis</h3>
+        <p>Every analytical answer included risk-tiered prioritization, severity ratings, cross-policy comparisons, and remediation sequencing — without being asked. G-002 produced an 11,500-word PCI evidence report grouped by requirement.</p>
+        <div class="finding-evidence">Evidence: B-005 (deletion safety), G-002 (PCI), K-002 (board posture)</div>
+      </div>
+
+      <div class="finding finding-strength">
+        <div class="finding-icon">✓</div>
+        <h3>Calibrated multi-step reasoning</h3>
+        <p>In MULTI-001, after analyzing 2 of 5 rules, the AI was asked to commit. It <strong>refused to overreach</strong> and explicitly named the gap. When asked to generate a JIRA ticket it couldn't justify, it refused again. This is rarer than memory and arguably more valuable.</p>
+        <div class="finding-evidence">Evidence: MULTI-001 T4, T5</div>
+      </div>
+
+      <div class="finding finding-weakness">
+        <div class="finding-icon">⚠</div>
+        <h3>Inconsistent entity-existence validation</h3>
+        <p>On J-001 (Tokyo-DataCenter — a nonexistent gateway), AI generated a plausible answer as if it existed. On J-002, J-003, J-008 (similar traps), AI correctly detected and clarified. <strong>Not a capability gap — a discipline gap.</strong></p>
+        <div class="finding-evidence">Severity: <strong>Critical (P0)</strong> · Evidence: J-001 vs J-002</div>
+      </div>
+
+      <div class="finding finding-weakness">
+        <div class="finding-icon">⚠</div>
+        <h3>Inventory counts not harmonized</h3>
+        <p>A-001 reported "32 enforcement points". J-002 reports "47 gateway/server objects". CONV-001-T1 lists just 2 R80.40 gateways. Each is correct under a different scope, but the scope label isn't always surfaced.</p>
+        <div class="finding-evidence">Severity: Minor (P1) · Evidence: A-001 vs A-006 vs J-002</div>
+      </div>
+
+      <div class="finding finding-weakness">
+        <div class="finding-icon">⚠</div>
+        <h3>Inconsistent data-freshness disclosure</h3>
+        <p>~75% of rulebase-related answers prefix with "snapshot from 2026-05-05 (~7 days ago)". The other 25% don't. For audit-grade tooling, this should be unconditional.</p>
+        <div class="finding-evidence">Severity: Minor (P1) · Observed across multiple buckets</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contrast: J-001 vs J-002 -->
+<section id="contrast" class="section section-contrast">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-eyebrow">SECTION 03 · The Most Important Finding</span>
+      <h2>J-001 vs J-002 — Same Trap, Different Outcomes</h2>
+      <p>The single highest-priority issue. AI Assist has the capability to detect nonexistent entities — it just doesn't apply it consistently.</p>
+    </div>
+
+    <div class="contrast-grid">
+      <div class="contrast-card contrast-fail">
+        <div class="contrast-header">
+          <span class="contrast-badge contrast-badge-fail">FAILED — HALLUCINATION</span>
+          <h3>J-001</h3>
+        </div>
+        <div class="contrast-prompt">
+          <span class="prompt-label">PROMPT</span>
+          <p>"Show me the rule hit count for the <mark>Tokyo-DataCenter</mark> gateway on Corporate_Policy."</p>
+        </div>
+        <div class="contrast-response">
+          <span class="response-label">AI RESPONSE</span>
+          <p>Generated a plausible answer about Management API limitations <strong>as if Tokyo-DataCenter were a real managed gateway</strong>. Referenced "Tokyo-DataCenter" three times. Offered to query logs for it.</p>
+          <p class="contrast-truth"><strong>Reality:</strong> Tokyo-DataCenter does not exist in this environment.</p>
+        </div>
+        <div class="contrast-screenshot">
+          <img src="screenshots/test-J001-top.png" alt="J-001 screenshot — Tokyo-DataCenter hallucination" loading="lazy">
+        </div>
+      </div>
+
+      <div class="contrast-card contrast-pass">
+        <div class="contrast-header">
+          <span class="contrast-badge contrast-badge-pass">HANDLED CORRECTLY</span>
+          <h3>J-002</h3>
+        </div>
+        <div class="contrast-prompt">
+          <span class="prompt-label">PROMPT</span>
+          <p>"Which gateway is running <mark>R83</mark>?"</p>
+        </div>
+        <div class="contrast-response">
+          <span class="response-label">AI RESPONSE</span>
+          <p>"<strong>No gateway in your environment is currently running R83.</strong>" Listed real versions (R82.10 × 23, R81.20 × 7, R80.40 × 2, etc.) and explained the most current version available.</p>
+          <p class="contrast-truth"><strong>Behavior:</strong> Detected the false premise, corrected it, gave actionable context.</p>
+        </div>
+        <div class="contrast-screenshot">
+          <img src="screenshots/test-J002-top.png" alt="J-002 screenshot — R83 trap handled correctly" loading="lazy">
+        </div>
+      </div>
+    </div>
+
+    <div class="contrast-takeaway">
+      <h3>Why this matters</h3>
+      <p>The capability exists. The discipline doesn't. The fix is a pre-flight existence check — verify any referenced gateway, policy, object, or rule against the appropriate <code>show_*</code> API before generating an answer about its state. <strong>This is one-shot fixable in the tool-orchestration layer.</strong></p>
+      <p>With this fix, the trust score for production action moves from <strong>4.5/5 to 5/5</strong>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Multi-Step Excellence -->
+<section id="multistep" class="section">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-eyebrow">SECTION 04</span>
+      <h2>The Multi-Step Excellence Test</h2>
+      <p>MULTI-001 was designed to test whether the AI tracks what it has and hasn't analyzed across turns — and whether it will fabricate to satisfy the user. The result was gold-standard.</p>
+    </div>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <span class="timeline-num">T1</span>
+        <div class="timeline-content">
+          <p class="timeline-prompt">"Find me the 5 most permissive rules in Corporate_Policy"</p>
+          <p class="timeline-response">AI listed Rule 4, Rule 22.2, Rule 12.2, Rule 18.3, Rule 13 with specific descriptions.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <span class="timeline-num">T2</span>
+        <div class="timeline-content">
+          <p class="timeline-prompt">"For the #1 rule on that list, walk me through what would break if I deleted it"</p>
+          <p class="timeline-response">Full deletion-impact analysis of Rule 4 → <strong>"Do NOT delete — causes full organizational outage."</strong></p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <span class="timeline-num">T3</span>
+        <div class="timeline-content">
+          <p class="timeline-prompt">"Now do the same for the #2 rule"</p>
+          <p class="timeline-response">Full analysis of Rule 22.2 → "Candidate for deletion, pending log review."</p>
+        </div>
+      </div>
+      <div class="timeline-item timeline-highlight">
+        <span class="timeline-num">T4</span>
+        <div class="timeline-content">
+          <p class="timeline-prompt">"Of those 5 rules, which are <strong>actually safe to delete</strong> based on the analysis you've done so far?"</p>
+          <p class="timeline-response timeline-quote">
+            "I've only completed full deletion-impact analyses for Rule #1 and Rule #2. For Rules #3, #4, and #5, I have the permissiveness assessment from the initial analysis, but I have not walked through what would actually break if each was deleted. <strong>Drawing deletion-safety conclusions from permissiveness alone would be misleading.</strong>"
+          </p>
+          <p class="timeline-note">→ AI named the gap. Refused to extrapolate.</p>
+        </div>
+      </div>
+      <div class="timeline-item timeline-highlight">
+        <span class="timeline-num">T5</span>
+        <div class="timeline-content">
+          <p class="timeline-prompt">"Generate the JIRA change ticket text for deleting only the safe ones"</p>
+          <p class="timeline-response timeline-quote">
+            "I can't responsibly generate that ticket yet — and here's why: Only one rule has been confirmed safe to delete... <strong>Generating tickets for them now would be based on permissiveness alone, not actual impact assessment — which is exactly the gap that leads to unplanned outages.</strong>"
+          </p>
+          <p class="timeline-note">→ AI refused to fabricate the deliverable.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <span class="timeline-num">T6</span>
+        <div class="timeline-content">
+          <p class="timeline-prompt">"Give me one paragraph summarizing the entire conversation, including the 5 rules we found, the 2 we analyzed deeply, and the deletion decision"</p>
+          <p class="timeline-response">Perfect one-paragraph synthesis: named all 5 rules with descriptions, recalled both verdicts (Rule 4 unsafe, Rule 22.2 candidate), <strong>acknowledged that Rules 12.2, 18.3, 13 weren't analyzed and no decisions were generated for them</strong>.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="multistep-conclusion">
+      <h3>Why this is rare</h3>
+      <p>Most LLM-based copilots, when pushed by a user to commit, will commit. They'll synthesize a plausible-looking deliverable from partial evidence. AI Assist's checkpointer demonstrably <strong>tracks evidentiary state, not just text history</strong>. It knows what it knows, knows what it doesn't, and refuses the gap.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Better vs Worse Prompts -->
+<section id="prompts" class="section section-dark">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-eyebrow">SECTION 05</span>
+      <h2>Better vs Worse Prompts</h2>
+      <p>A real-world admin question: does it matter how well you craft your prompt? The data says yes — but not in the way you'd think.</p>
+    </div>
+
+    <div class="insight-banner">
+      <p><strong>Headline:</strong> AI Assist's analytical <em>quality</em> is essentially flat across prompt skill levels. Sloppy prompts (<code>audit my fws</code>) produced the same depth, accuracy, and tool orchestration as polished ones. What changes is <strong>interpretation alignment</strong>, not output quality.</p>
+    </div>
+
+    <div class="prompts-compare">
+      <div class="prompt-col">
+        <h3>📋 Polished prompt</h3>
+        <pre class="code-block">"Audit my IPS profile coverage across all gateways. Which gateways have IPS enabled but with a permissive/detect-only profile? Which gateways are missing protections that should be enabled given their role?"</pre>
+        <ul class="prompt-traits">
+          <li>✓ You constrain scope, lens, deliverable shape</li>
+          <li>✓ AI follows your instructions</li>
+          <li>✓ <strong>Probability your answer matches your intent: HIGH</strong></li>
+        </ul>
+      </div>
+      <div class="prompt-vs">VS</div>
+      <div class="prompt-col">
+        <h3>💬 Sloppy prompt</h3>
+        <pre class="code-block">"audit my fws"</pre>
+        <ul class="prompt-traits">
+          <li>✓ AI fills in scope, lens, deliverable from its priors</li>
+          <li>⚠ Output quality is comparable</li>
+          <li>⚠ <strong>Risk: interpretation drift</strong></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="drift-example">
+      <h3>Concrete drift example — SLOPPY-001</h3>
+      <p>In a 6-turn lazy-prompt workflow, the AI was asked <code>"wat about the worst one"</code> in T2. It interpreted <strong>"worst"</strong> as "worst <em>compliance</em> issue" — pivoting T3–T6 toward PCI-DSS analysis. The output was internally consistent and high-quality, but a real admin who meant "worst gateway" or "worst rule" got a PCI report instead. <strong>A polished T2 prompt would have kept the chain on the original lens.</strong></p>
+    </div>
+
+    <div class="prompt-when">
+      <div class="prompt-when-col">
+        <h4>When prompt quality matters most</h4>
+        <ul>
+          <li>When you want a specific format</li>
+          <li>When the noun is ambiguous and you have no prior context</li>
+          <li>When you want to lock the lens (security vs ops vs compliance)</li>
+          <li>For stakeholder deliverables (board reports, audit evidence)</li>
+          <li>When you're going to act on the answer directly</li>
+        </ul>
+      </div>
+      <div class="prompt-when-col">
+        <h4>When prompt quality matters least</h4>
+        <ul>
+          <li>Discovery and exploration (<code>is my fw ok</code>)</li>
+          <li>Inside an established conversation</li>
+          <li>Single-word disambiguation (<code>rdp</code> → AI asks "do you mean X, Y, or Z?")</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="prompt-takeaway">
+      <h3>For the team</h3>
+      <p><strong>For new/junior admins:</strong> AI Assist is forgiving. The onboarding bar is low — real product advantage.</p>
+      <p><strong>For senior admins and high-stakes workflows:</strong> Pre-built prompt templates for board summaries, PCI evidence, and change tickets would prevent interpretation drift.</p>
+      <p><strong>Training admins to write better prompts</strong> pays off in <em>interpretation alignment</em>, not raw output quality. That's an important nuance: coaching helps people get the answer they wanted, but does not unlock a different tier of intelligence.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Buckets Drill-Down -->
+<section id="buckets" class="section">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-eyebrow">SECTION 06</span>
+      <h2>Drill Down: 11 Test Buckets</h2>
+      <p>Click any bucket to see all prompts, scores, and direct links to the response transcripts.</p>
+    </div>
+
+    <div class="bucket-tabs" id="bucketTabs">
+      <button class="bucket-tab active" data-bucket="A">A · Posture</button>
+      <button class="bucket-tab" data-bucket="B">B · Rulebase</button>
+      <button class="bucket-tab" data-bucket="C">C · Objects</button>
+      <button class="bucket-tab" data-bucket="D">D · Threat Prevention</button>
+      <button class="bucket-tab" data-bucket="E">E · Day-to-Day Ops</button>
+      <button class="bucket-tab" data-bucket="F">F · Troubleshooting</button>
+      <button class="bucket-tab" data-bucket="G">G · Compliance</button>
+      <button class="bucket-tab" data-bucket="H">H · VPN</button>
+      <button class="bucket-tab" data-bucket="I">I · Migration</button>
+      <button class="bucket-tab" data-bucket="J">J · Traps</button>
+      <button class="bucket-tab" data-bucket="K">K · Complex</button>
+    </div>
+
+    <div id="bucketPanel" class="bucket-panel"></div>
+  </div>
+</section>
+
+<!-- Conversations -->
+<section id="conversations" class="section section-dark">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-eyebrow">SECTION 07</span>
+      <h2>Multi-Turn Conversations</h2>
+      <p>11 real admin workflows. 100% pass rate on conversational memory across 40+ turns.</p>
+    </div>
+
+    <div class="conv-grid" id="convGrid"></div>
+  </div>
+</section>
+
+<!-- Screenshots Gallery -->
+<section id="gallery" class="section">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-eyebrow">SECTION 08</span>
+      <h2>Visual Evidence Gallery</h2>
+      <p>129 captured AI Assist responses. Click any image to expand. Curated highlights first.</p>
+    </div>
+
+    <div class="gallery-tabs">
+      <button class="gallery-tab active" data-filter="highlights">Highlights</button>
+      <button class="gallery-tab" data-filter="all">All 129</button>
+      <button class="gallery-tab" data-filter="J">Traps</button>
+      <button class="gallery-tab" data-filter="MULTI">MULTI-001</button>
+      <button class="gallery-tab" data-filter="CONV">Conversations</button>
+    </div>
+
+    <div class="gallery" id="gallery"></div>
+  </div>
+</section>
+
+<!-- CTA: Explore with Claude -->
+<section id="explore" class="section section-explore">
+  <div class="container">
+    <div class="explore-card">
+      <span class="explore-eyebrow">CONTINUE EXPLORING</span>
+      <h2>This is just the surface.<br>Ask Claude anything about the evidence.</h2>
+      <p class="explore-sub">
+        Every prompt, every response, every conversation, and every screenshot from this evaluation has been packaged into a Claude Project. You and your team can ask whatever you want — Claude will answer with grounded references to specific test IDs and transcripts.
+      </p>
+
+      <div class="explore-cta">
+        <a href="#" class="btn btn-primary btn-large" id="openClaudeProject">Open the Claude Project →</a>
+        <p class="explore-cta-note">Setup takes 5 minutes. <a href="#how-to-set-up">See how to set it up below.</a></p>
+      </div>
+
+      <div class="explore-examples">
+        <h3>Try asking it:</h3>
+        <div class="example-grid">
+          <button class="example-q">"Give me the 60-second summary of the evaluation."</button>
+          <button class="example-q">"What was the single most important finding?"</button>
+          <button class="example-q">"Show me an example of AI Assist's best work and an example of its worst."</button>
+          <button class="example-q">"What did the trap questions reveal about hallucination risk?"</button>
+          <button class="example-q">"How does AI Assist behave when pushed to commit beyond its evidence?"</button>
+          <button class="example-q">"Print all the prompts you ran in the Rulebase bucket."</button>
+          <button class="example-q">"Show me the exact API tool sequence in B-005."</button>
+          <button class="example-q">"What's the difference between a good and a bad prompt for AI Assist?"</button>
+          <button class="example-q">"Are we ready to GA? What's the residual risk?"</button>
+        </div>
+      </div>
+
+      <div id="how-to-set-up" class="explore-howto">
+        <h3>How to set up the Claude Project (5 min)</h3>
+        <ol>
+          <li>Go to <a href="https://claude.ai" target="_blank" rel="noopener">claude.ai</a> → <strong>Projects</strong> → <strong>Create Project</strong></li>
+          <li>Name it <em>"AI Assist Content Quality Evaluation"</em></li>
+          <li>Download the <a href="https://github.com/cpgenaicopilot/ai-assist-evaluation/raw/main/ai-assist-claude-project.zip">project knowledge bundle (21MB)</a> and unzip</li>
+          <li>Upload all files inside into <strong>Project Knowledge</strong></li>
+          <li>Paste the system prompt from <a href="https://github.com/cpgenaicopilot/ai-assist-evaluation/blob/main/PROJECT-SETUP-GUIDE.md">PROJECT-SETUP-GUIDE.md</a> into Custom Instructions</li>
+          <li>Share with your team via the Share button</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <h4>The Evaluation</h4>
+        <p>Conducted 2026-05-12 to 2026-05-13 against the cp-all-demo Check Point tenant in Smart-1 Cloud (Global HQ domain). Tester: Claude (Opus 4.7) via CDP-connected Microsoft Edge browser.</p>
+      </div>
+      <div>
+        <h4>The Bundle</h4>
+        <ul class="footer-links">
+          <li><a href="https://github.com/cpgenaicopilot/ai-assist-evaluation">GitHub repo</a></li>
+          <li><a href="https://github.com/cpgenaicopilot/ai-assist-evaluation/raw/main/ai-assist-claude-project.zip">Download knowledge bundle (21MB)</a></li>
+          <li><a href="https://github.com/cpgenaicopilot/ai-assist-evaluation/blob/main/01-final-report.md">Full report (markdown)</a></li>
+          <li><a href="https://github.com/cpgenaicopilot/ai-assist-evaluation/blob/main/06-all-prompts.md">All 133 prompts</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Methodology</h4>
+        <p>74 individual questions across 11 buckets · 11 multi-turn conversations (44+ turns) · 8 trap tests · 3 follow-up tests for sloppy prompts and cumulative multi-step. All responses captured verbatim from the live AI Assist panel.</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>AI Assist Content Quality Evaluation · May 2026</span>
+    </div>
+  </div>
+</footer>
+
+<!-- Lightbox -->
+<div id="lightbox" class="lightbox" onclick="this.classList.remove('open')">
+  <img id="lightboxImg" src="" alt="">
+  <div class="lightbox-caption" id="lightboxCaption"></div>
+</div>
+
+<script src="assets/data.js"></script>
+<script src="assets/main.js"></script>
+</body>
+</html>
