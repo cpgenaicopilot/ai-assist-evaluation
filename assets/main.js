@@ -116,6 +116,42 @@ Chart.defaults.font.family = "Inter, system-ui, sans-serif";
   });
 })();
 
+// Response time chart — min / median / avg / max per bucket
+(function() {
+  const ctx = document.getElementById('timeChart');
+  if (!ctx) return;
+  const labels = Object.keys(D.responseTime);
+  const min = labels.map(k => D.responseTime[k].min);
+  const med = labels.map(k => D.responseTime[k].med);
+  const max = labels.map(k => D.responseTime[k].max);
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [
+        { label: 'Fastest (s)', data: min, backgroundColor: palette.accent, borderRadius: 3 },
+        { label: 'Median (s)',  data: med, backgroundColor: palette.accent2, borderRadius: 3 },
+        { label: 'Slowest (s)', data: max, backgroundColor: palette.warn, borderRadius: 3 }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'bottom', labels: { padding: 14, font: { size: 11.5 } } },
+        tooltip: {
+          backgroundColor: '#1a2138', borderColor: palette.border, borderWidth: 1,
+          callbacks: { label: (item) => item.dataset.label + ': ' + item.parsed.y + 's' }
+        }
+      },
+      scales: {
+        x: { grid: { display: false } },
+        y: { grid: { color: palette.border }, ticks: { callback: (v) => v + 's' } }
+      }
+    }
+  });
+})();
+
 // Trust bars
 (function() {
   const host = document.getElementById('trustBars');

@@ -31,6 +31,7 @@
     </div>
     <ul class="nav-links">
       <li><a href="#dashboard">Dashboard</a></li>
+      <li><a href="#methodology">Methodology</a></li>
       <li><a href="#explore" class="cta-link">Explore with Claude →</a></li>
       <li><a href="#findings">Findings</a></li>
       <li><a href="#contrast">J-001 vs J-002</a></li>
@@ -146,7 +147,98 @@
         </div>
       </div>
 
+      <div class="card card-large">
+        <h3>Response Time by Bucket — seconds</h3>
+        <p class="card-desc">Measured from prompt-send to response-stable (includes thinking + tool calls + rendered output). Simple trap questions (J) take ~20–60s. Heavy compliance and complex audits (G, K) reach 4 minutes for parallel multi-tool orchestration. <strong>The variance is the AI's adaptive depth — it does more work for harder questions.</strong></p>
+        <div class="chart-wrap">
+          <canvas id="timeChart"></canvas>
+        </div>
+      </div>
+
     </div>
+  </div>
+</section>
+
+<!-- Methodology: how scoring was done -->
+<section id="methodology" class="section">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-eyebrow">METHODOLOGY · HOW THE SCORES WERE PRODUCED</span>
+      <h2>How we scored — and how we know</h2>
+      <p>The numbers above only matter if you trust the verification behind them. Here is exactly how each scoring dimension was assessed, what was cross-checked, and what the limitations of the method are.</p>
+    </div>
+
+    <div class="method-grid">
+
+      <div class="method-card">
+        <div class="method-weight">25%</div>
+        <h3>Factual Correctness</h3>
+        <p class="method-q">"Are the specific claims (gateway names, blade states, rule numbers, hit counts) actually true?"</p>
+        <p class="method-how"><strong>Verified by</strong>: opening the cited gateway / policy / rule / object directly in SmartConsole and comparing field-by-field. Example: when AI claimed <code>Corporate-Cluster has only Firewall + Identity Awareness</code>, I opened the cluster's <em>Blades</em> tab and confirmed checkbox-by-checkbox.</p>
+      </div>
+
+      <div class="method-card">
+        <div class="method-weight">20%</div>
+        <h3>Grounding &amp; Honesty</h3>
+        <p class="method-q">"Did the answer come from real API data — or was the AI making things up?"</p>
+        <p class="method-how"><strong>Verified by</strong>: inspecting the visible tool-call trace (<code>Calling management__show_*</code>). If a claim wasn't justified by what the tool returned, it counted against grounding. The J-001 hallucination was caught this way — the AI referenced "Tokyo-DataCenter" without ever querying for it.</p>
+      </div>
+
+      <div class="method-card">
+        <div class="method-weight">15%</div>
+        <h3>Technical Accuracy</h3>
+        <p class="method-q">"Is Check Point terminology used correctly? Are the concepts described accurately?"</p>
+        <p class="method-how"><strong>Verified by</strong>: a CCSE/CCSM-level read of the response — checking that the AI didn't confuse Inline Layer vs Sub-Policy, SIC vs VPN trust, blades vs services, Access Control vs Threat Prevention layers, etc. Wrong terminology was logged even if the answer was directionally correct.</p>
+      </div>
+
+      <div class="method-card">
+        <div class="method-weight">15%</div>
+        <h3>Depth &amp; Completeness</h3>
+        <p class="method-q">"Would an expert admin expect more? Did the answer surface the obvious next concern?"</p>
+        <p class="method-how"><strong>Verified by</strong>: comparing against what a senior admin would produce in 15–30 minutes manually. Risk-tiered output, severity ratings, cross-policy comparisons, and remediation sequencing each contributed. Missing them dropped the score.</p>
+      </div>
+
+      <div class="method-card">
+        <div class="method-weight">10%</div>
+        <h3>Practical Usefulness</h3>
+        <p class="method-q">"Could a real admin paste this into a JIRA ticket, audit report, or board summary?"</p>
+        <p class="method-how"><strong>Verified by</strong>: judging whether the response was time-saving and actionable. Generic chatbot fluff scored low. Concrete rule numbers, gateway names, severity, and explicit recommendations scored high.</p>
+      </div>
+
+      <div class="method-card">
+        <div class="method-weight">10%</div>
+        <h3>Proactiveness &amp; Insight</h3>
+        <p class="method-q">"Did the answer surface useful info the admin didn't ask for but needed?"</p>
+        <p class="method-how"><strong>Verified by</strong>: counting unprompted findings — e.g., G-001 (RDP audit) flagged Rule 15.3's source-unrestricted internal lab as a hidden weakness, even though the admin only asked about external RDP. That earned a high proactiveness score.</p>
+      </div>
+
+      <div class="method-card">
+        <div class="method-weight">5%</div>
+        <h3>Reasoning Clarity</h3>
+        <p class="method-q">"Is the visible thinking phase coherent? Does the AI explain why, not just what?"</p>
+        <p class="method-how"><strong>Verified by</strong>: reading the visible <em>"Thought for X seconds"</em> section. If the reasoning was incoherent, off-target, or missing — score dropped. If the AI explained <em>why</em> it chose specific tools or pivoted approach, score rose.</p>
+      </div>
+
+      <div class="method-card method-card-meta">
+        <div class="method-weight">⏱</div>
+        <h3>Performance / Response Time</h3>
+        <p class="method-q">"How fast — and is the speed appropriate to the question complexity?"</p>
+        <p class="method-how"><strong>Measured</strong>: prompt-send to response-stable (includes thinking + tool calls + rendered output). <strong>Pattern</strong>: 20–60s for trap questions, 80–130s for typical analytical questions, 4+ minutes for complex multi-tool audits. <strong>Verdict</strong>: variance is appropriate — the AI <em>does more work</em> for harder questions, it doesn't stall.</p>
+      </div>
+
+    </div>
+
+    <div class="method-callout">
+      <h3>Limitations &amp; honesty about the method</h3>
+      <ul>
+        <li><strong>Single tester, not a panel.</strong> Scoring is subjective within the rubric. A panel of 3 CCSE-certified admins would tighten the variance.</li>
+        <li><strong>Snapshot in time.</strong> The rulebase analyzer's data was 5–7 days old at testing — flagged in every response, but worth acknowledging.</li>
+        <li><strong>Sampled verification.</strong> Not every claim in every 12,000-word response was opened in SmartConsole. The most verifiable, highest-impact, and most surprising claims were prioritized.</li>
+        <li><strong>Performance numbers are end-to-end.</strong> They include UI rendering and network — not pure AI inference latency. Useful as user-perceived speed, not as model benchmark.</li>
+        <li><strong>One critical hallucination was caught</strong> (J-001). Others may exist in unsampled portions of long answers. The proper P0 fix (entity-existence pre-flight validation) would close this gap.</li>
+      </ul>
+    </div>
+
   </div>
 </section>
 

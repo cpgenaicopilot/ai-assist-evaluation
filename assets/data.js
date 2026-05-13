@@ -187,6 +187,21 @@ window.EVAL_DATA = {
     A: 3688, B: 5651, C: 2998, D: 4683, E: 3113, F: 4203, G: 8213, H: 4292, I: 4114, J: 1355, K: 6500
   },
 
+  // Response time in seconds — measured from prompt-send to response-stable
+  responseTime: {
+    A: { min: 86, med: 92, max: 192, avg: 126 },
+    B: { min: 76, med: 180, max: 241, avg: 171 },
+    C: { min: 40, med: 141, max: 232, avg: 120 },
+    D: { min: 90, med: 126, max: 184, avg: 132 },
+    E: { min: 32, med: 88, max: 194, avg: 96 },
+    F: { min: 52, med: 85, max: 137, avg: 91 },
+    G: { min: 52, med: 230, max: 242, avg: 193 },
+    H: { min: 85, med: 100, max: 119, avg: 101 },
+    I: { min: 47, med: 64, max: 185, avg: 90 },
+    J: { min: 20, med: 37, max: 60, avg: 38 },
+    K: { min: 80, med: 144, max: 246, avg: 157 }
+  },
+
   highlightScreenshots: [
     { file: 'test-K002-top.png', id: 'K-002', label: 'Board-ready posture audit (12k words)' },
     { file: 'test-J001-top.png', id: 'J-001', label: 'THE Hallucination — Tokyo-DataCenter' },
