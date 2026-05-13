@@ -161,7 +161,7 @@ function renderBucket(letter) {
             <div class="tscore ${scoreClass(t.score)}">${t.score.toFixed(2)}</div>
             <div class="tlinks">
               <a class="tlink" href="screenshots/${shotFile}" data-lightbox="${t.id}" data-label="${t.id} — score ${t.score.toFixed(2)}">📷 Screenshot</a>
-              <a class="tlink" href="transcripts/03-bucket-${letter}-${slug(b.name)}.md#${idClean.toLowerCase()}" target="_blank">📝 Transcript</a>
+              <a class="tlink" href="https://github.com/cpgenaicopilot/ai-assist-evaluation/blob/main/transcripts/03-bucket-${letter}-${slug(b.name)}.md#${idClean.toLowerCase()}" target="_blank" rel="noopener">📝 Transcript</a>
             </div>
           </div>
         `;
