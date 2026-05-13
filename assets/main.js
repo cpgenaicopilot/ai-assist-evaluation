@@ -24,19 +24,34 @@ Chart.defaults.font.family = "Inter, system-ui, sans-serif";
 (function() {
   const ctx = document.getElementById('bucketChart');
   if (!ctx) return;
+  const shortNames = {
+    A: 'Posture & Inventory',
+    B: 'Rulebase Hygiene',
+    C: 'Object Hygiene',
+    D: 'Threat Prevention',
+    E: 'Day-to-Day Ops',
+    F: 'Troubleshooting',
+    G: 'Compliance & Audit',
+    H: 'VPN & Connectivity',
+    I: 'Migration & Capacity',
+    J: 'Trap Tests',
+    K: 'Complex Workflows'
+  };
   const labels = Object.keys(D.buckets);
   const data = labels.map(k => D.buckets[k].avg);
   const names = labels.map(k => D.buckets[k].name);
+  const minScore = Math.min(...data);
 
   new Chart(ctx, {
     type: 'bar',
     data: {
-      labels: labels.map((k, i) => k + ' · ' + names[i].split(' ')[0]),
+      labels: labels.map(k => k + ' · ' + shortNames[k]),
       datasets: [{
         data,
-        backgroundColor: data.map(v => v < 4 ? palette.warn : v >= 4.6 ? palette.accent : palette.accent2),
-        borderRadius: 6,
-        barThickness: 28
+        // Brand-compliant: dominant Brand Berry, Orange call-out on the lowest bucket
+        backgroundColor: data.map(v => v === minScore ? palette.danger : palette.accent),
+        borderRadius: 2,
+        barThickness: 22
       }]
     },
     options: {
@@ -48,7 +63,7 @@ Chart.defaults.font.family = "Inter, system-ui, sans-serif";
         tooltip: {
           callbacks: {
             title: (items) => names[items[0].dataIndex],
-            label: (item) => 'Avg score: ' + item.parsed.x.toFixed(2) + '/5'
+            label: (item) => 'Avg score: ' + item.parsed.x.toFixed(2) + ' / 5'
           },
           backgroundColor: palette.surface,
           borderColor: palette.border,
@@ -57,8 +72,12 @@ Chart.defaults.font.family = "Inter, system-ui, sans-serif";
         }
       },
       scales: {
-        x: { min: 0, max: 5, grid: { color: palette.border }, ticks: { stepSize: 1 } },
-        y: { grid: { display: false } }
+        x: {
+          min: 3.5, max: 5,
+          grid: { color: palette.border },
+          ticks: { stepSize: 0.5, callback: (v) => v.toFixed(1) }
+        },
+        y: { grid: { display: false }, ticks: { font: { size: 12 } } }
       }
     }
   });
