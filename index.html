@@ -27,6 +27,7 @@
       <li><a href="#multistep">Multi-Step</a></li>
       <li><a href="#prompts">Prompts</a></li>
       <li><a href="#buckets">Drill Down</a></li>
+      <li><a href="#gallery">Screenshots</a></li>
       <li><a href="#explore" class="cta-link">Explore with Claude →</a></li>
     </ul>
   </div>
@@ -40,6 +41,11 @@
     <h1>Check Point AI Assist<br><span class="hero-accent">Content Quality Evaluation</span></h1>
     <p class="hero-sub">
       An independent, evidence-based assessment of the AI copilot embedded in Smart-1 Cloud Security Management — across 74 individual questions, 11 multi-turn conversations, 8 trap tests, and a deep look at multi-step reasoning.
+    </p>
+    <p class="hero-author">
+      <span class="author-label">AUTHOR</span>
+      <span class="author-name">Barak Kfir</span>
+      <span class="author-org">· Check Point Software Technologies</span>
     </p>
 
     <div class="hero-stats">
@@ -328,29 +334,34 @@
 
     <div class="prompts-compare">
       <div class="prompt-col">
-        <h3>📋 Polished prompt</h3>
+        <h3>📋 Well-phrased prompt</h3>
         <pre class="code-block">"Audit my IPS profile coverage across all gateways. Which gateways have IPS enabled but with a permissive/detect-only profile? Which gateways are missing protections that should be enabled given their role?"</pre>
+        <p class="prompt-result-label">AI Behavior</p>
+        <p class="prompt-result">Ran 4 tool calls (<code>show_objects</code>, <code>show_ips_status</code>, <code>show_threat_protections</code>, <code>show_gateways_and_servers</code>). Returned severity-tiered output: Critical (8 gateways with IPS blade off) → High (gateways with blade on but no policy installed) → Medium (profile breakdown). Answered the exact question asked.</p>
         <ul class="prompt-traits">
           <li>✓ You constrain scope, lens, deliverable shape</li>
-          <li>✓ AI follows your instructions</li>
-          <li>✓ <strong>Probability your answer matches your intent: HIGH</strong></li>
+          <li>✓ AI follows your instructions precisely</li>
+          <li>✓ <strong>Probability the answer matches your intent: HIGH</strong></li>
         </ul>
       </div>
       <div class="prompt-vs">VS</div>
       <div class="prompt-col">
         <h3>💬 Sloppy prompt</h3>
         <pre class="code-block">"audit my fws"</pre>
+        <p class="prompt-result-label">AI Behavior</p>
+        <p class="prompt-result">Expanded "fws" → firewalls. Ran the Policy Rulebase Analyzer + Management API in parallel. Returned a 6-section audit: gateway infra, version distribution, blade coverage, policy distribution, risk concentrations, top-5 actions. 5,294 chars — comparable depth to the polished version. <em>But</em> chose its own lens (general posture, not IPS-specific).</p>
         <ul class="prompt-traits">
           <li>✓ AI fills in scope, lens, deliverable from its priors</li>
-          <li>⚠ Output quality is comparable</li>
+          <li>✓ Output quality / depth / tool use: <strong>comparable</strong></li>
           <li>⚠ <strong>Risk: interpretation drift</strong></li>
         </ul>
       </div>
     </div>
 
     <div class="drift-example">
-      <h3>Concrete drift example — SLOPPY-001</h3>
-      <p>In a 6-turn lazy-prompt workflow, the AI was asked <code>"wat about the worst one"</code> in T2. It interpreted <strong>"worst"</strong> as "worst <em>compliance</em> issue" — pivoting T3–T6 toward PCI-DSS analysis. The output was internally consistent and high-quality, but a real admin who meant "worst gateway" or "worst rule" got a PCI report instead. <strong>A polished T2 prompt would have kept the chain on the original lens.</strong></p>
+      <h3>⚠ Concrete drift example — SLOPPY-001 T2</h3>
+      <p>The same conversation that started with <code>"audit my fws"</code> got a follow-up: <code>"wat about the worst one"</code>. AI interpreted <strong>"worst"</strong> as <strong>"worst compliance issue"</strong> — pivoting T3–T6 toward a PCI-DSS deep dive. Internally consistent, high-quality output. <strong>But</strong> a real admin who meant <em>"worst gateway"</em>, <em>"worst rule"</em>, or <em>"worst configuration risk"</em> got a PCI report instead.</p>
+      <p class="drift-conclusion">A polished T2 prompt — <code>"which gateway from that audit has the worst posture?"</code> — would have kept the chain on the original lens. The fix isn't smarter AI; it's clearer intent.</p>
     </div>
 
     <div class="prompt-when">
@@ -423,27 +434,6 @@
   </div>
 </section>
 
-<!-- Screenshots Gallery -->
-<section id="gallery" class="section">
-  <div class="container">
-    <div class="section-head">
-      <span class="section-eyebrow">SECTION 08</span>
-      <h2>Visual Evidence Gallery</h2>
-      <p>129 captured AI Assist responses. Click any image to expand. Curated highlights first.</p>
-    </div>
-
-    <div class="gallery-tabs">
-      <button class="gallery-tab active" data-filter="highlights">Highlights</button>
-      <button class="gallery-tab" data-filter="all">All 129</button>
-      <button class="gallery-tab" data-filter="J">Traps</button>
-      <button class="gallery-tab" data-filter="MULTI">MULTI-001</button>
-      <button class="gallery-tab" data-filter="CONV">Conversations</button>
-    </div>
-
-    <div class="gallery" id="gallery"></div>
-  </div>
-</section>
-
 <!-- CTA: Explore with Claude -->
 <section id="explore" class="section section-explore">
   <div class="container">
@@ -493,6 +483,27 @@
   </div>
 </section>
 
+<!-- Screenshots Gallery (moved to end) -->
+<section id="gallery" class="section">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-eyebrow">APPENDIX · VISUAL EVIDENCE</span>
+      <h2>Screenshot Library</h2>
+      <p>All 129 captured AI Assist responses. Filter by category, click any image to expand. Use this as the visual reference when reading the report or exploring the Claude Project above.</p>
+    </div>
+
+    <div class="gallery-tabs">
+      <button class="gallery-tab active" data-filter="highlights">Highlights</button>
+      <button class="gallery-tab" data-filter="all">All 129</button>
+      <button class="gallery-tab" data-filter="J">Traps</button>
+      <button class="gallery-tab" data-filter="MULTI">MULTI-001</button>
+      <button class="gallery-tab" data-filter="CONV">Conversations</button>
+    </div>
+
+    <div class="gallery" id="gallery"></div>
+  </div>
+</section>
+
 <!-- Footer -->
 <footer class="footer">
   <div class="container">
@@ -516,7 +527,12 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <span>AI Assist Content Quality Evaluation · May 2026</span>
+      <div class="footer-bottom-author">
+        <span class="footer-author-label">AUTHOR</span>
+        <span class="footer-author-name">Barak Kfir</span>
+        <span class="footer-author-org">Check Point Software Technologies</span>
+      </div>
+      <span class="footer-bottom-meta">AI Assist Content Quality Evaluation · May 2026</span>
     </div>
   </div>
 </footer>
