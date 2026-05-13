@@ -455,12 +455,12 @@
       </p>
 
       <div class="explore-cta">
-        <a href="#" class="btn btn-primary btn-large" id="openClaudeProject">Open the Claude Project →</a>
-        <p class="explore-cta-note">Setup takes 5 minutes. <a href="#how-to-set-up">See how to set it up below.</a></p>
+        <a href="https://claude.ai/project/019e2111-65bb-75e1-841d-b622188c4783" target="_blank" rel="noopener" class="btn btn-primary btn-large">Open the Claude Project →</a>
+        <p class="explore-cta-note">Already set up and shared with the team. Just click and start asking.</p>
       </div>
 
       <div class="explore-examples">
-        <h3>Try asking it:</h3>
+        <h3>Try asking it (click to copy):</h3>
         <div class="example-grid">
           <button class="example-q">"Give me the 60-second summary of the evaluation."</button>
           <button class="example-q">"What was the single most important finding?"</button>
@@ -475,15 +475,19 @@
       </div>
 
       <div id="how-to-set-up" class="explore-howto">
-        <h3>How to set up the Claude Project (5 min)</h3>
-        <ol>
-          <li>Go to <a href="https://claude.ai" target="_blank" rel="noopener">claude.ai</a> → <strong>Projects</strong> → <strong>Create Project</strong></li>
-          <li>Name it <em>"AI Assist Content Quality Evaluation"</em></li>
-          <li>Download the <a href="https://github.com/cpgenaicopilot/ai-assist-evaluation/raw/main/ai-assist-claude-project.zip">project knowledge bundle (21MB)</a> and unzip</li>
-          <li>Upload all files inside into <strong>Project Knowledge</strong></li>
-          <li>Paste the system prompt from <a href="https://github.com/cpgenaicopilot/ai-assist-evaluation/blob/main/PROJECT-SETUP-GUIDE.md">PROJECT-SETUP-GUIDE.md</a> into Custom Instructions</li>
-          <li>Share with your team via the Share button</li>
-        </ol>
+        <h3>What's already loaded in the project</h3>
+        <ul class="explore-howto-list">
+          <li><strong>The full report</strong> — executive verdict, scoring dashboard, all findings, recommendations</li>
+          <li><strong>All 133 prompts verbatim</strong> — organized by test ID, ready to print</li>
+          <li><strong>74 individual test transcripts</strong> across 11 buckets — every word AI Assist returned</li>
+          <li><strong>11 conversation transcripts</strong> — every turn captured</li>
+          <li><strong>3 follow-up tests</strong> — sloppy prompts + cumulative multi-step</li>
+          <li><strong>129 screenshots</strong> — visual evidence Claude can pull and describe on request</li>
+        </ul>
+        <p class="explore-howto-foot">
+          Claude in the project is instructed to cite specific test IDs (e.g. <code>B-005</code>, <code>J-001</code>, <code>MULTI-001-T4</code>), distinguish report claims from raw transcript evidence, and refuse to fabricate.
+          Want to spin up your own copy? See the <a href="https://github.com/cpgenaicopilot/ai-assist-evaluation/blob/main/transcripts/PROJECT-SETUP-GUIDE.md" target="_blank" rel="noopener">setup guide</a>.
+        </p>
       </div>
     </div>
   </div>

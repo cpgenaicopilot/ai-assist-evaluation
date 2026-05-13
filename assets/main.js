@@ -342,8 +342,3 @@ document.querySelectorAll('.example-q').forEach(btn => {
   });
 });
 
-// === Open Claude project link ===
-document.getElementById('openClaudeProject')?.addEventListener('click', (e) => {
-  e.preventDefault();
-  window.open('https://claude.ai/projects', '_blank', 'noopener');
-});

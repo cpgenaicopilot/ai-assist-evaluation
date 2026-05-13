@@ -730,9 +730,14 @@ code { background: var(--surface-2); padding: 0.12em 0.4em; border-radius: 4px; 
   padding: 26px 30px;
 }
 .explore-howto h3 { font-size: 16px; margin-bottom: 14px; color: var(--accent); }
-.explore-howto ol { padding-left: 22px; }
+.explore-howto ol, .explore-howto ul.explore-howto-list { padding-left: 22px; }
 .explore-howto li { font-size: 14px; color: var(--text-dim); margin-bottom: 8px; line-height: 1.55; }
 .explore-howto li strong { color: var(--text); }
+.explore-howto-foot {
+  margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--border);
+  font-size: 13.5px; color: var(--text-mute); line-height: 1.6;
+}
+.explore-howto-foot code { font-size: 12.5px; }
 
 /* === Footer === */
 .footer {
