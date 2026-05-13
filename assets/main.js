@@ -259,8 +259,9 @@ function buildAllGalleryItems() {
       all.push({ file: `test-${fileId}-top.png`, id: t.id, label: t.diff });
     }
   }
-  // Conversations
+  // Conversations (CONV-001 has no screenshots — skip)
   for (const conv of D.conversations) {
+    if (conv.id === 'CONV-001') continue;
     if (conv.files) {
       for (const f of conv.files) {
         all.push({ file: `test-${f}-top.png`, id: f, label: conv.title });
@@ -291,7 +292,7 @@ function buildBucketGallery(letter) {
 }
 function buildConvGallery() {
   const out = [];
-  for (let i = 1; i <= 4; i++) out.push({ file: `test-CONV-T${i}-top.png`, id: `CONV-001-T${i}`, label: 'R80.40 upgrade' });
+  // CONV-001 (the original R80.40 conversation) has transcripts but no screenshots captured
   for (let n = 2; n <= 11; n++) {
     const id = 'CONV0' + (n < 10 ? '0' + n : n);
     for (let t = 1; t <= 4; t++) out.push({ file: `test-${id}-T${t}-top.png`, id: `${id}-T${t}`, label: '' });
@@ -324,6 +325,16 @@ function openLightbox(src, caption) {
   document.getElementById('lightboxCaption').textContent = caption || '';
   box.classList.add('open');
 }
+
+// === Back to top ===
+(function() {
+  const btn = document.getElementById('backToTop');
+  if (!btn) return;
+  window.addEventListener('scroll', () => {
+    btn.classList.toggle('visible', window.scrollY > 600);
+  });
+  btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+})();
 
 // === Example questions: copy on click ===
 document.querySelectorAll('.example-q').forEach(btn => {

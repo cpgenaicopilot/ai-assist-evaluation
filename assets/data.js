@@ -156,7 +156,7 @@ window.EVAL_DATA = {
   },
 
   conversations: [
-    { id: 'CONV-001', turns: 4, title: 'R80.40 Upgrade Prioritization', desc: 'Risk summary → drill into Corporate-GW → exclude Branch_Office_Policy (constraint test) → compare to Data_Center_GW. Memory + constraint + pronoun all passed.', score: 4.80, files: ['CONV-T1','CONV-T2','CONV-T3','CONV-T4'] },
+    { id: 'CONV-001', turns: 4, title: 'R80.40 Upgrade Prioritization', desc: 'Risk summary → drill into Corporate-GW → exclude Branch_Office_Policy (constraint test) → compare to Data_Center_GW. Memory + constraint + pronoun all passed. (Transcripts only — no screenshots captured for the original run.)', score: 4.80 },
     { id: 'CONV-002', turns: 4, title: 'Change Request: Finance → Salesforce', desc: 'Pre-change verification, draft rule, rollback plan, pre-flight checks.', score: 4.50 },
     { id: 'CONV-003', turns: 4, title: 'Auditor RDP Investigation', desc: 'Direct evidence → indirect path check → VPN scope clarification → one-page report.', score: 4.70 },
     { id: 'CONV-004', turns: 4, title: 'Quarterly Rulebase Cleanup', desc: 'Find stale rules → classify safety → impact-of-deletion → sequenced 5-week plan.', score: 4.60 },
@@ -200,7 +200,7 @@ window.EVAL_DATA = {
     { file: 'test-A006-top.png', id: 'A-006', label: 'R82.5 quantum-blade trap — corrected' },
     { file: 'test-C006-top.png', id: 'C-006', label: 'Ambiguous "Server" — clarification asked' },
     { file: 'test-SLOPPY-S3-top.png', id: 'SLOPPY-S3', label: '"rdp" → 5-option clarification' },
-    { file: 'test-CONV-T3-top.png', id: 'CONV-001-T3', label: 'Constraint test — exclude policy' },
+    { file: 'test-CONV004-T3-top.png', id: 'CONV-004-T3', label: 'Cleanup workflow — multi-turn synthesis' },
     { file: 'test-B003-top.png', id: 'B-003', label: 'Permissive rules risk-ranked' },
     { file: 'test-F001-top.png', id: 'F-001', label: 'Drop diagnosis across 5 policies' }
   ]

@@ -825,5 +825,21 @@ code { background: var(--surface-2); padding: 0.12em 0.4em; border-radius: 4px; 
 .footer-bottom-meta { color: var(--text-mute); font-size: 12.5px; }
 @media (max-width: 540px) { .footer-bottom { justify-content: center; text-align: center; } }
 
+/* Back to top */
+.back-to-top {
+  position: fixed; bottom: 28px; right: 28px; z-index: 90;
+  width: 46px; height: 46px;
+  border-radius: 50%; border: none; cursor: pointer;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: var(--bg);
+  font-size: 22px; font-weight: 700;
+  box-shadow: 0 12px 30px -10px var(--accent-glow);
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.15s ease;
+  font-family: inherit;
+}
+.back-to-top.visible { opacity: 1; pointer-events: auto; }
+.back-to-top:hover { transform: translateY(-3px); }
+
 /* Misc */
 mark { background: var(--accent); color: var(--bg); padding: 0 4px; border-radius: 3px; }
